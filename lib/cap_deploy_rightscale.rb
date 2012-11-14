@@ -11,9 +11,11 @@ require "cap_deploy_rightscale/credentials"
 require "cap_deploy_rightscale/ext/capistrano/configuration"
 require "cap_deploy_rightscale/rightscale/client"
 require "cap_deploy_rightscale/rightscale/operations"
+require "cap_deploy_rightscale/strategies/wait_helper"
 require "cap_deploy_rightscale/strategies/base_restart_strategy"
 require "cap_deploy_rightscale/strategies/rolling_restart_strategy"
 require "cap_deploy_rightscale/strategies/swap_restart_strategy"
+require "cap_deploy_rightscale/strategies/run_script_strategy"
 
 module CapDeployRightscale
 end

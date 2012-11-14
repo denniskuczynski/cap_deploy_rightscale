@@ -46,12 +46,12 @@ module CapDeployRightscale
       end
 
       def run_script(server_id, script_id, parameters = {})
-        status_id = CapDeployRightscale::Rightscale::Operations.run_script(@account_id, @cookie, server_id, script_id, parameters)
-        status_id
+        status_href = CapDeployRightscale::Rightscale::Operations.run_script(@account_id, @cookie, server_id, script_id, parameters)
+        status_href
       end
       
-       def get_status(status_id)
-        status = CapDeployRightscale::Rightscale::Operations.get_status(@account_id, @cookie, status_id)
+       def get_status(status_href)
+        status = CapDeployRightscale::Rightscale::Operations.get_status(@account_id, @cookie, status_href)
         status
       end
 

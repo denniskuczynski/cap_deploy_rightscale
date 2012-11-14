@@ -8,6 +8,7 @@ describe 'CapDeployRightscale::Rightscale::Client' do
   DUMMY_SERVER_ID = '5678'
   DUMMY_STATUS_ID = '2468'
   DUMMY_SCRIPT_ID = '1357'
+  DUMMY_STATUS_HREF = 'https://my.rightscale.com/api/acct/1234/audit_entries/67895'
   
   describe 'without credentials' do
     it '#initialize' do
@@ -104,7 +105,8 @@ describe 'CapDeployRightscale::Rightscale::Client' do
         it 'on_success' do
           register_run_script
 
-          @client.run_script(DUMMY_SERVER_ID, DUMMY_SCRIPT_ID)
+          status_href = @client.run_script(DUMMY_SERVER_ID, DUMMY_SCRIPT_ID)
+          status_href.should eq(DUMMY_STATUS_HREF)
         end
       end
       
@@ -112,7 +114,8 @@ describe 'CapDeployRightscale::Rightscale::Client' do
         it 'on_success' do
           register_get_status
 
-          @client.get_status(DUMMY_STATUS_ID)
+          status = @client.get_status(DUMMY_STATUS_HREF)
+          status.should eq('completed')
         end
       end
     end    

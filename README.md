@@ -52,11 +52,19 @@ APP_TAG = 'ns:role=app'
 tag APP_TAG, :app, :deployment => DEPLOYMENT_ID
 
 namespace :rightscale do
-  desc "Rightscale Deploy"
+  desc "Rightscale: Deploy"
   before 'rightscale:deploy', 'rightscale:login'
   task :deploy do
     strategy = CapDeployRightscale::Strategies::RollingRestartStrategy.new(DEPLOYMENT_ID, LOAD_BALANCER_NAME, APP_TAG)
-    strategy.deploy
+    strategy.execute
+  end
+
+  desc "Rightscale: Run Rightscript"
+  before 'rightscale:run_script', 'rightscale:login'
+  task :run_script do
+    script_id = '12345678'
+    strategy = CapDeployRightscale::Strategies::RunScriptStrategy.new(DEPLOYMENT_ID, APP_TAG, script_id)
+    strategy.execute
   end
 end
 ```

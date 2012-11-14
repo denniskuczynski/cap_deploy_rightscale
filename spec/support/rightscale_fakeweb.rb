@@ -27,11 +27,12 @@ module RightscaleFakeweb
   end
   
   def register_run_script
-    FakeWeb.register_uri(:any, %r|https://my.rightscale.com/api/acct/1234/servers/5678/run_script$|, :body => '')
+    FakeWeb.register_uri(:any, %r|https://my.rightscale.com/api/acct/1234/servers/5678/run_script$|,  :status => ["201", "Created"], :location => 'https://my.rightscale.com/api/acct/1234/audit_entries/67895')
   end
   
   def register_get_status
-    FakeWeb.register_uri(:any, %r|https://my.rightscale.com/api/acct/1234/statuses/2468$|, :body => '')
+    get_status_xml_path = File.expand_path(File.dirname(__FILE__) + "/../../spec/cap_deploy_rightscale/rightscale/example_xml/get_status.xml")
+    FakeWeb.register_uri(:any, %r|https://my.rightscale.com/api/acct/1234/audit_entries/67895$|, :body => File.read(get_status_xml_path))
   end
 
 end

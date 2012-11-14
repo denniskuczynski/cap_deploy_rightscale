@@ -2,7 +2,7 @@ module CapDeployRightscale
   module Strategies
     class SwapRestartStrategy < BaseRestartStrategy
     
-      def deploy
+      def execute
         servers = @rightscale.servers(CapDeployRightscale::Rightscale::Client::FLUSH_SERVER_CACHE)
         servers_in_deployment = servers.find_all { |server| server['deployment-id'] == @deployment_id}
         app_servers_in_deployment = servers_in_deployment.find_all { |server| server['tags'].include? @app_tag}

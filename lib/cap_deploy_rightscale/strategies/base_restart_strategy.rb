@@ -2,6 +2,8 @@ module CapDeployRightscale
   module Strategies
     class BaseRestartStrategy
       
+      include CapDeployRightscale::Strategies::WaitHelper
+      
       def initialize(deployment_id, load_balancer_name, app_tag)
         @rightscale = CapDeployRightscale::Rightscale::Client.new
         credentials = CapDeployRightscale::Credentials.new
@@ -13,8 +15,8 @@ module CapDeployRightscale
         @app_tag = app_tag
       end
       
-      def deploy
-        raise Exception "BaseStrategy#deploy should be overidden by subclass"
+      def execute
+        raise Exception "BaseRestartStrategy#execute should be overidden by subclass"
       end
       
       def wait_for_server_state(server_id, desired_state, polling_wait_in_minutes)
@@ -30,19 +32,6 @@ module CapDeployRightscale
           valid_state
         end
         wait_for_state(get_server_state_function, check_server_state_function, polling_wait_in_minutes)
-      end
-      
-      protected
-      
-      def wait_for_state(get_current_state_function, check_state_function, polling_wait_in_minutes)
-        while true
-          current_state = get_current_state_function.call
-          if check_state_function.call(current_state)
-            return current_state
-          else
-            sleep(60 * polling_wait_in_minutes)
-          end
-        end
       end
 
     end

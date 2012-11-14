@@ -22,9 +22,9 @@ describe 'CapDeployRightscale::Strategies::BaseRestartStrategy' do
     @credentials.delete_file
   end
   
-  it '#deploy' do
+  it '#execute' do
     expect {
-      @base_strategy.deploy
+      @base_strategy.execute
     }.to raise_error(Exception)
   end
   

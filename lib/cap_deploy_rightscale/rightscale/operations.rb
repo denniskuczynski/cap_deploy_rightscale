@@ -61,11 +61,23 @@ module CapDeployRightscale
       
       def self.run_script(account_id, cookie, server_id, script_id, parameters = {})
         parameters['right_script'] = "#{RIGHTSCALE_ACCOUNT_PATH_PREFIX}/#{account_id}/right_scripts/#{script_id}"
-        execute_http_request(:post, "#{RIGHTSCALE_ACCOUNT_PATH_PREFIX}/#{account_id}/servers/#{server_id}/run_script", cookie, parameters)
+        response = execute_http_request(:post, "#{RIGHTSCALE_ACCOUNT_PATH_PREFIX}/#{account_id}/servers/#{server_id}/run_script", cookie, nil, nil, parameters)
+        if response.code.to_i == 201
+          response['location']
+        else
+          nil
+        end
       end
       
-      def self.get_status(account_id, cookie, status_id)
-        execute_http_request(:get, "#{RIGHTSCALE_ACCOUNT_PATH_PREFIX}/#{account_id}/statuses/#{status_id}", cookie)
+      def self.get_status(account_id, cookie, status_href)
+        response = execute_http_request(:get, status_href, cookie)
+        if response.code.to_i == 200
+          xml_doc = Nokogiri::XML(response.body)
+          audit_entry_node = xml_doc.xpath('/audit-entry').first
+          audit_entry_node.xpath('state').text()
+        else
+          nil
+        end
       end
     
       def self.execute_http_request(method, url, cookie, username=nil, password=nil, parameters = nil)
@@ -85,11 +97,7 @@ module CapDeployRightscale
         end
         request["X-API-VERSION"] = RIGHTSCALE_API_VERSION
         request["Cookie"] = cookie if cookie
-        if parameters
-          parameters.each do |key, value|
-            request[key] = value
-          end
-        end
+        request.set_form_data(parameters) if parameters
         response = http.request(request)
         response
       end
