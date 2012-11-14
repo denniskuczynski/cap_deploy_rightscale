@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <ec2-ssh-key-href>https://my.rightscale.com/api/acct/1234/ec2_ssh_keys/261206001</ec2-ssh-key-href>
+  <ec2-security-groups>
+  <ec2-security-group-href>https://my.rightscale.com/api/acct/1234/ec2_security_groups/424476001</ec2-security-group-href>
+  </ec2-security-groups>
+  <ec2-instance-type>c1.medium</ec2-instance-type>
+  <aws-platform>Linux/Unix</aws-platform>
+  <pricing>on_demand</pricing>
+  <locked>false</locked>
+  <ebs-optimized>false</ebs-optimized>
+  <ec2-availability-zone>us-east-1d</ec2-availability-zone>
+  <cloud-id>1</cloud-id>
+  <launched-by>dennis@9mmedia.com</launched-by>
+  <dns-name>ec2-54-242-135-213.compute-1.amazonaws.com</dns-name>
+  <private-dns-name>ip-10-204-233-47.ec2.internal</private-dns-name>
+  <ip-address>54.242.135.213</ip-address>
+  <private-ip-address>10.204.233.47</private-ip-address>
+  <aws-id>i-df0a8da3</aws-id>
+  <aws-product-codes></aws-product-codes>
+</settings>
