@@ -26,8 +26,8 @@ module CapDeployRightscale
     
       def run_script(server)
         puts "Executing Script #{@script_id} on Server: #{server['nickname']}"
-        status_href = @rightscale.run_script(@server_id, @script_id)
-        wait_for_script_state(status_href, 'complete', 1)
+        status_href = @rightscale.run_script(server['server-id'], @script_id)
+        wait_for_script_state(status_href, 'completed', 1)
       end
     
       def wait_for_script_state(status_href, desired_state, polling_wait_in_minutes)
