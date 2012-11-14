@@ -64,7 +64,8 @@ end
 ## Storing Rightscale and AWS Credentials
 
 Currently this gem will just store your credentials on disk in the file: .cap_deploy_rightscale_credentials.json
-NOTE: This is not very secure!
+
+* NOTE: This is not very secure!
 
 To initialize your credentials you can run the following cap commands:
 
@@ -76,6 +77,7 @@ To initialize your credentials you can run the following cap commands:
     bundle exec cap aws:load_balancers  # To see a table of load balancers in AWS
 
 Be sure to add the following files to your .gitignore file so not to accidentally check in the credentials:
+
     .cap_deploy_rightscale_credentials.json
     .cap_deploy_rightscale_server_cache.json
 
@@ -86,10 +88,3 @@ See the code for the different default scripts in the CapDeployRightscale::Strat
 The example deploy.rb file above will use CapDeployRightscale::Strategies::RollingRestartStrategy to restart all app servers when running:
 
     bundle exec cap rightscale:deploy
-
-## Alternative gems
-
-You may also want to check out:
-
-    https://github.com/99designs/capistrano-rightscale
-    https://github.com/roothybrid7/cap-rightscale
