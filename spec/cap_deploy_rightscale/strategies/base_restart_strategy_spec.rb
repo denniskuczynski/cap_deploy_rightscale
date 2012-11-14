@@ -9,13 +9,13 @@ describe 'CapDeployRightscale::Strategies::BaseRestartStrategy' do
     @credentials.add_credential('rightscale', 'account', DUMMY_ACCOUNT_ID)
     @credentials.add_credential('rightscale', 'username', 'fake@example.com')
     @credentials.add_credential('rightscale', 'password', 'abc123')
+    @credentials.add_credential('aws', 'aws_access_key_id', 'FAKE_ID')
+    @credentials.add_credential('aws', 'aws_secret_access_key', 'FAKE_KEY')
     @credentials.save_file
-    rightscale = client = CapDeployRightscale::Rightscale::Client.new
-    elb = nil
     load_balancer_name = 'dummy'
     deployment_id = 'dummy'
     app_tag = 'dummy'
-    @base_strategy = CapDeployRightscale::Strategies::BaseRestartStrategy.new(rightscale, elb, load_balancer_name, deployment_id, app_tag)
+    @base_strategy = CapDeployRightscale::Strategies::BaseRestartStrategy.new(load_balancer_name, deployment_id, app_tag)
   end
   
   after(:each) do

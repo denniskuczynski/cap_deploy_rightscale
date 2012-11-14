@@ -4,9 +4,9 @@ module Capistrano
       
       # Associate a tag in a specific deployment with a role
       # e.g:
-      #   tag "x99:role=app", :app, :deployment => 45678
+      #   tag "ns:role=app", :app, :deployment => 45678
       def tag(which, *args)
-        rightscale = Rightscale::Client.new
+        rightscale = CapDeployRightscale::Rightscale::Client.new
         servers = rightscale.servers(CapDeployRightscale::Rightscale::Client::USE_SERVER_CACHE)
         
         deployment = args.last[:deployment]

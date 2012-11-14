@@ -5,8 +5,8 @@
 	  <nickname>dev v13</nickname>
 	  <updated-at type="datetime">2012-10-26T17:48:59Z</updated-at>
 	  <href>https://my.rightscale.com/api/acct/1234/servers/5678</href>
-	  <deployment-href>https://my.rightscale.com/api/acct/1234/deployments/234571001</deployment-href>
-	  <server-template-href>https://my.rightscale.com/api/acct/1234/ec2_server_templates/236313001</server-template-href>
+	  <deployment-href>https://my.rightscale.com/api/acct/1234/deployments/1234</deployment-href>
+	  <server-template-href>https://my.rightscale.com/api/acct/1234/ec2_server_templates/34543</server-template-href>
 	  <state>operational</state>
 	  <server-type>ec2</server-type>
 	  <current-instance-href nil="true"/>

@@ -2,11 +2,14 @@ module CapDeployRightscale
   module Strategies
     class BaseRestartStrategy
       
-      def initialize(rightscale, elb, load_balancer_name, deployment_id, app_tag)
-        @rightscale = rightscale
-        @elb = elb
-        @load_balancer_name = load_balancer_name
+      def initialize(deployment_id, load_balancer_name, app_tag)
+        @rightscale = CapDeployRightscale::Rightscale::Client.new
+        credentials = CapDeployRightscale::Credentials.new
+        aws_access_key_id = credentials.get_credential('aws', 'aws_access_key_id')
+        aws_secret_access_key = credentials.get_credential('aws', 'aws_secret_access_key')
+        @elb = ::Rightscale::ElbInterface.new(aws_access_key_id, aws_secret_access_key)
         @deployment_id = deployment_id.to_s
+        @load_balancer_name = load_balancer_name
         @app_tag = app_tag
       end
       

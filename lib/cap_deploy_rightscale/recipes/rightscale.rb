@@ -1,13 +1,13 @@
 
-cset :rightscale_account { Capistrano::CLI.password_prompt "Rightscale Account: " }
-cset :rightscale_username { Capistrano::CLI.password_prompt "Rightscale Username: " }
-cset :rightscale_password { Capistrano::CLI.password_prompt "Rightscale Password: " }
+_cset(:rightscale_account) { Capistrano::CLI.password_prompt "Rightscale Account ID: " }
+_cset(:rightscale_username) { Capistrano::CLI.password_prompt "Rightscale Username: " }
+_cset(:rightscale_password) { Capistrano::CLI.password_prompt "Rightscale Password: " }
 
 namespace :rightscale do
   
   desc "Store AWS Credentials on disk for ELB Operations"
   task :store_credentials do
-    credentials = Credentials.new
+    credentials = CapDeployRightscale::Credentials.new
     credentials.add_credential('rightscale', 'account', rightscale_account)
     credentials.add_credential('rightscale', 'username', rightscale_username)
     credentials.add_credential('rightscale', 'password', rightscale_password)
@@ -26,10 +26,11 @@ namespace :rightscale do
   end
 
   desc "Rightscale List Servers"
+  before 'rightscale:servers', 'rightscale:login'
   task :servers do
-    credentials = Credentials.new
+    credentials = CapDeployRightscale::Credentials.new
     rightscale_account = credentials.get_credential('rightscale', 'account')
-    client = CapDeployRightscale::Rightscale::Client.new(rightscale_account)
+    client = CapDeployRightscale::Rightscale::Client.new
     servers = client.servers(CapDeployRightscale::Rightscale::Client::FLUSH_SERVER_CACHE)
     print_as_table(servers)
   end

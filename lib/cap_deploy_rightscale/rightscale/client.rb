@@ -16,7 +16,7 @@ module CapDeployRightscale
       end
     
       def login()
-        raise Exception 'Username/Password must be stored in credentials to login' if not @username or not @password
+        raise Exception, 'Username/Password must be stored in credentials to login.  Please run "cap rightscale:store_credentials"' if not @username or not @password
         @cookie = CapDeployRightscale::Rightscale::Operations.login(@account_id, @username, @password, @cookie)
         if @cookie
           @credentials.add_credential('rightscale', 'cookie', @cookie)
