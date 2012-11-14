@@ -15,12 +15,10 @@ module CapDeployRightscale
         servers = @rightscale.servers(CapDeployRightscale::Rightscale::Client::FLUSH_SERVER_CACHE)
         servers_in_deployment = servers.find_all { |server| server['deployment-id'] == @deployment_id}
         app_servers_in_deployment = servers_in_deployment.find_all { |server| server['tags'].include? @app_tag}
-        live_app_servers = app_servers_in_deployment.find_all { |server| load_balancer[:instances].include? server['aws-id'] }
+        live_app_servers = app_servers_in_deployment.find_all { |server| server['state'] == 'operational' }
         
         # Deployment Process:
         #  1. Iterate over all current instances and run the specified script
-        start_server_and_add_to_elb(inactive_app_servers.first)
-        necessary_servers = live_app_servers.length - 1
         live_app_servers.each do |server|
           run_script(server)
         end
