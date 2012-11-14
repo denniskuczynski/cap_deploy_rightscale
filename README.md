@@ -27,7 +27,7 @@ require 'capistrano/ext/multistage'
 require 'cap_deploy_rightscale'
 require 'cap_deploy_rightscale/recipes'
 
-set :application, "sample_application_"
+set :application, "sample_application"
 
 set :repository,  "https://example_repo_path.git"
 set :scm, :git
@@ -88,3 +88,9 @@ See the code for the different default scripts in the CapDeployRightscale::Strat
 The example deploy.rb file above will use CapDeployRightscale::Strategies::RollingRestartStrategy to restart all app servers when running:
 
     bundle exec cap rightscale:deploy
+
+## Alternative Gems
+
+Check out:
+ * https://github.com/roothybrid7/cap-rightscale
+ * https://github.com/99designs/capistrano-rightscale
