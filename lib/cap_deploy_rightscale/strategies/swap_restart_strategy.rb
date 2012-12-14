@@ -31,6 +31,9 @@ module CapDeployRightscale
           updated_servers << wait_for_server_state(server['server-id'], 'operational', 4)
         end
         updated_servers.each do |server|
+          ping_server("http://#{server['dns-name']}", 2)
+        end
+        updated_servers.each do |server|
           puts "Adding Server: #{server['nickname']} to load balancer"
           @elb.register_instances_with_load_balancer(@load_balancer_name, server['aws-id'])
         end

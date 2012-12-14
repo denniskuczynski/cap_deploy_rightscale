@@ -33,6 +33,26 @@ module CapDeployRightscale
         end
         wait_for_state(get_server_state_function, check_server_state_function, polling_wait_in_minutes)
       end
+      
+      def ping_server(url, polling_wait_in_minutes)
+        ping_server_function = lambda do
+          puts "Pinging URL: #{url}"
+          uri = URI.parse(url)
+          http = Net::HTTP.new(uri.host, uri.port)
+          begin
+            request = Net::HTTP::Get.new(uri.request_uri)
+            response = http.request(request)
+          rescue Exception => e
+            puts e
+          end
+        end
+        check_server_state_function = lambda do |response|
+          valid_state = response and response.code.to_i == 200
+          puts "Waiting for Server to return HTTP_OK..." if not valid_state
+          valid_state
+        end  
+        wait_for_state(ping_server_function, check_server_state_function, polling_wait_in_minutes)
+      end
 
     end
   end
